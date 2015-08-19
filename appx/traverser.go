@@ -6,20 +6,28 @@ import (
 	"strings"
 )
 
+func supportedType(t string) bool {
+	return t == "string" ||
+		t == "rune" ||
+		strings.HasPrefix(t, "int") ||
+		strings.HasPrefix(t, "float")
+}
+
 func fieldType(expr ast.Expr) string {
 	switch t := expr.(type) {
 	case *ast.Ident: // Trivial
-		return t.Name
+		if supportedType(t.Name) {
+			return t.Name
+		}
+		log.Println("Ignoring Ident field type:", expr)
+		return ""
 	case *ast.SelectorExpr:
 		return t.X.(*ast.Ident).Name + "." + t.Sel.Name
 	case *ast.StarExpr:
 		return "*" + fieldType(t.X)
 	case *ast.ArrayType:
 		sliceOf := fieldType(t.Elt)
-		if sliceOf == "string" ||
-			sliceOf == "rune" ||
-			strings.HasPrefix(sliceOf, "int") ||
-			strings.HasPrefix(sliceOf, "float") {
+		if supportedType(sliceOf) {
 			return "[]" + sliceOf
 		}
 
@@ -27,7 +35,7 @@ func fieldType(expr ast.Expr) string {
 		return ""
 	case *ast.MapType:
 		log.Println("Ignoring map field type:", expr)
-		return ""//"map[" + fieldType(t.Key) + "]" + fieldType(t.Value)
+		return "" //"map[" + fieldType(t.Key) + "]" + fieldType(t.Value)
 	default:
 		log.Println("Ignoring unkownfield type:", expr)
 		return ""
