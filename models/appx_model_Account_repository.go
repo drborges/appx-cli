@@ -63,6 +63,13 @@ func (repo *AccountAppxRepository) GetByName(value string) (*AccountAppxModel, e
 	return item, repo.db.Load(item)
 }
 
+func (repo *AccountAppxRepository) GetByTags(value []string) (*AccountAppxModel, error) {
+	item := &Account{
+		Tags: value,
+	}
+	return item, repo.db.Load(item)
+}
+
 func (repo *AccountAppxRepository) GetByToken(value string) (*AccountAppxModel, error) {
 	item := &Account{
 		Token: value,
@@ -96,6 +103,14 @@ func (repo *AccountAppxRepository) FindWhereName(op string, value string) *Accou
 	}
 }
 
+func (repo *AccountAppxRepository) FindWhereTags(op string, value []string) *AccountQueryRunner {
+	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Tags" + op, value)
+	return &AccountQueryRunner{
+		db: repo.db,
+		q:  q,
+	}
+}
+
 func (repo *AccountAppxRepository) FindWhereToken(op string, value string) *AccountQueryRunner {
 	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Token" + op, value)
 	return &AccountQueryRunner{
@@ -103,6 +118,26 @@ func (repo *AccountAppxRepository) FindWhereToken(op string, value string) *Acco
 		q:  q,
 	}
 }
+
+
+
+
+
+
+
+
+
+
+func (repo *AccountAppxRepository) FindWhereTagsContains(value string) *AccountQueryRunner {
+	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Tags=", value)
+	return &AccountQueryRunner{
+		db: repo.db,
+		q:  q,
+	}
+}
+
+
+
 
 
 
@@ -124,6 +159,14 @@ func (repo *AccountAppxRepository) FindByEmail(value string) *AccountQueryRunner
 
 func (repo *AccountAppxRepository) FindByName(value string) *AccountQueryRunner {
 	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Name=", value)
+	return &AccountQueryRunner{
+		db: repo.db,
+		q:  q,
+	}
+}
+
+func (repo *AccountAppxRepository) FindByTags(value []string) *AccountQueryRunner {
+	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Tags=", value)
 	return &AccountQueryRunner{
 		db: repo.db,
 		q:  q,
@@ -196,6 +239,11 @@ func (runner *AccountQueryRunner) OrderByNameAsc() *AccountQueryRunner {
 	return runner
 }
 
+func (runner *AccountQueryRunner) OrderByTagsAsc() *AccountQueryRunner {
+	runner.q = runner.q.Order("Tags")
+	return runner
+}
+
 func (runner *AccountQueryRunner) OrderByTokenAsc() *AccountQueryRunner {
 	runner.q = runner.q.Order("Token")
 	return runner
@@ -215,6 +263,11 @@ func (runner *AccountQueryRunner) OrderByEmailDesc() *AccountQueryRunner {
 
 func (runner *AccountQueryRunner) OrderByNameDesc() *AccountQueryRunner {
 	runner.q = runner.q.Order("-Name")
+	return runner
+}
+
+func (runner *AccountQueryRunner) OrderByTagsDesc() *AccountQueryRunner {
+	runner.q = runner.q.Order("-Tags")
 	return runner
 }
 

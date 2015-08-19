@@ -22,7 +22,7 @@ func Generate(model *ModelDescriptor) error {
 		log.Fatal(err)
 	}
 
-	t = template.Must(template.New("repo").Parse(templates.AppxRepository))
+	t = template.Must(template.New("repo").Funcs(templates.FuncMap).Parse(templates.AppxRepository))
 	output = model.Pkg + "/appx_model_" + model.Name + "_repository.go"
 	f, err = os.Create(output)
 	if err != nil {

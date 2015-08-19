@@ -15,10 +15,16 @@ func fieldType(expr ast.Expr) string {
 	case *ast.StarExpr:
 		return "*" + fieldType(t.X)
 	case *ast.ArrayType:
-		// TODO handle slices of primitive types
-		// TODO handle embedded types
+		sliceOf := fieldType(t.Elt)
+		if sliceOf == "string" ||
+			sliceOf == "rune" ||
+			strings.HasPrefix(sliceOf, "int") ||
+			strings.HasPrefix(sliceOf, "float") {
+			return "[]" + sliceOf
+		}
+
 		log.Println("Ignoring array field type:", expr)
-		return ""//"[]" + fieldType(t.Elt)
+		return ""
 	case *ast.MapType:
 		log.Println("Ignoring map field type:", expr)
 		return ""//"map[" + fieldType(t.Key) + "]" + fieldType(t.Value)

@@ -76,6 +76,12 @@ func (repo *BroadcastAppxRepository) FindWhereURL(op string, value string) *Broa
 
 
 
+
+
+
+
+
+
 func (repo *BroadcastAppxRepository) FindByLength(value int) *BroadcastQueryRunner {
 	q := datastore.NewQuery(new(Broadcast).KeySpec().Kind).Filter("Length=", value)
 	return &BroadcastQueryRunner{
