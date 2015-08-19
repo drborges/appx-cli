@@ -180,10 +180,49 @@ func (runner *AccountQueryRunner) KeysOnly() *AccountQueryRunner {
 	return runner
 }
 
-func (runner *AccountQueryRunner) OrderBy(field string) *AccountQueryRunner {
-	runner.q = runner.q.Order(field)
+
+func (runner *AccountQueryRunner) OrderByBroadcastAsc() *AccountQueryRunner {
+	runner.q = runner.q.Order("Broadcast")
 	return runner
 }
+
+func (runner *AccountQueryRunner) OrderByEmailAsc() *AccountQueryRunner {
+	runner.q = runner.q.Order("Email")
+	return runner
+}
+
+func (runner *AccountQueryRunner) OrderByNameAsc() *AccountQueryRunner {
+	runner.q = runner.q.Order("Name")
+	return runner
+}
+
+func (runner *AccountQueryRunner) OrderByTokenAsc() *AccountQueryRunner {
+	runner.q = runner.q.Order("Token")
+	return runner
+}
+
+
+
+func (runner *AccountQueryRunner) OrderByBroadcastDesc() *AccountQueryRunner {
+	runner.q = runner.q.Order("-Broadcast")
+	return runner
+}
+
+func (runner *AccountQueryRunner) OrderByEmailDesc() *AccountQueryRunner {
+	runner.q = runner.q.Order("-Email")
+	return runner
+}
+
+func (runner *AccountQueryRunner) OrderByNameDesc() *AccountQueryRunner {
+	runner.q = runner.q.Order("-Name")
+	return runner
+}
+
+func (runner *AccountQueryRunner) OrderByTokenDesc() *AccountQueryRunner {
+	runner.q = runner.q.Order("-Token")
+	return runner
+}
+
 
 func (runner *AccountQueryRunner) Stream() *rivers.Stage {
 	return runner.db.Query(runner.q).StreamOf(&Account{})

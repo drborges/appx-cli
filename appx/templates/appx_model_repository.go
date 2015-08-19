@@ -113,10 +113,19 @@ func (runner *{{$model.Name}}QueryRunner) KeysOnly() *{{$model.Name}}QueryRunner
 	return runner
 }
 
-func (runner *{{$model.Name}}QueryRunner) OrderBy(field string) *{{$model.Name}}QueryRunner {
-	runner.q = runner.q.Order(field)
+{{ range $field, $type := .Fields }}
+func (runner *{{$model.Name}}QueryRunner) OrderBy{{ $field }}Asc() *{{$model.Name}}QueryRunner {
+	runner.q = runner.q.Order("{{ $field }}")
 	return runner
 }
+{{end}}
+
+{{ range $field, $type := .Fields }}
+func (runner *{{$model.Name}}QueryRunner) OrderBy{{ $field }}Desc() *{{$model.Name}}QueryRunner {
+	runner.q = runner.q.Order("-{{ $field }}")
+	return runner
+}
+{{end}}
 
 func (runner *{{$model.Name}}QueryRunner) Stream() *rivers.Stage {
 	return runner.db.Query(runner.q).StreamOf(&{{.Name}}{})

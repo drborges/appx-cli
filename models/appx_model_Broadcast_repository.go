@@ -134,10 +134,29 @@ func (runner *BroadcastQueryRunner) KeysOnly() *BroadcastQueryRunner {
 	return runner
 }
 
-func (runner *BroadcastQueryRunner) OrderBy(field string) *BroadcastQueryRunner {
-	runner.q = runner.q.Order(field)
+
+func (runner *BroadcastQueryRunner) OrderByLengthAsc() *BroadcastQueryRunner {
+	runner.q = runner.q.Order("Length")
 	return runner
 }
+
+func (runner *BroadcastQueryRunner) OrderByURLAsc() *BroadcastQueryRunner {
+	runner.q = runner.q.Order("URL")
+	return runner
+}
+
+
+
+func (runner *BroadcastQueryRunner) OrderByLengthDesc() *BroadcastQueryRunner {
+	runner.q = runner.q.Order("-Length")
+	return runner
+}
+
+func (runner *BroadcastQueryRunner) OrderByURLDesc() *BroadcastQueryRunner {
+	runner.q = runner.q.Order("-URL")
+	return runner
+}
+
 
 func (runner *BroadcastQueryRunner) Stream() *rivers.Stage {
 	return runner.db.Query(runner.q).StreamOf(&Broadcast{})
