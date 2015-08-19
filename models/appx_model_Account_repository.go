@@ -178,7 +178,7 @@ type AccountQueryRunner struct {
 	q  *datastore.Query
 }
 
-func (runner *AccountQueryRunner) Project(fields ...string) *AccountQueryRunner {
+func (runner *AccountQueryRunner) Select(fields ...string) *AccountQueryRunner {
 	runner.q = runner.q.Project(fields...)
 	return runner
 }
@@ -250,13 +250,13 @@ func (runner *AccountQueryRunner) Count() (int, error) {
 	return runner.db.Query(runner.q).Count()
 }
 
-func (runner *AccountQueryRunner) All() ([]*Account, error) {
-	items := []*Account{}
+func (runner *AccountQueryRunner) All() ([]*AccountAppxModel, error) {
+	items := []*AccountAppxModel{}
 	return items, runner.db.Query(runner.q).Results(items)
 }
 
-func (runner *AccountQueryRunner) First() (*Account, error) {
-	item := &Account{}
+func (runner *AccountQueryRunner) First() (*AccountAppxModel, error) {
+	item := &AccountAppxModel{}
 	return item, runner.db.Query(runner.q.Limit(1)).Result(item)
 }
 

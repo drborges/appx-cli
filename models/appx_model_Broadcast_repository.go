@@ -120,7 +120,7 @@ type BroadcastQueryRunner struct {
 	q  *datastore.Query
 }
 
-func (runner *BroadcastQueryRunner) Project(fields ...string) *BroadcastQueryRunner {
+func (runner *BroadcastQueryRunner) Select(fields ...string) *BroadcastQueryRunner {
 	runner.q = runner.q.Project(fields...)
 	return runner
 }
@@ -172,13 +172,13 @@ func (runner *BroadcastQueryRunner) Count() (int, error) {
 	return runner.db.Query(runner.q).Count()
 }
 
-func (runner *BroadcastQueryRunner) All() ([]*Broadcast, error) {
-	items := []*Broadcast{}
+func (runner *BroadcastQueryRunner) All() ([]*BroadcastAppxModel, error) {
+	items := []*BroadcastAppxModel{}
 	return items, runner.db.Query(runner.q).Results(items)
 }
 
-func (runner *BroadcastQueryRunner) First() (*Broadcast, error) {
-	item := &Broadcast{}
+func (runner *BroadcastQueryRunner) First() (*BroadcastAppxModel, error) {
+	item := &BroadcastAppxModel{}
 	return item, runner.db.Query(runner.q.Limit(1)).Result(item)
 }
 

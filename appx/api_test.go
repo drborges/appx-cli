@@ -6,5 +6,6 @@ import (
 )
 
 func TestAPI(t *testing.T) {
-	models.FromAccount(c).FindWhereTagsContains("Lol").All()
+	accounts, err := models.FromAccount(c).FindWhereTagsContains("Lol").Select("Email", "Token").Distinct().All()
+	accounts[0].Save()
 }

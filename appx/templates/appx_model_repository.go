@@ -115,7 +115,7 @@ type {{$model.Name}}QueryRunner struct {
 	q  *datastore.Query
 }
 
-func (runner *{{$model.Name}}QueryRunner) Project(fields ...string) *{{$model.Name}}QueryRunner {
+func (runner *{{$model.Name}}QueryRunner) Select(fields ...string) *{{$model.Name}}QueryRunner {
 	runner.q = runner.q.Project(fields...)
 	return runner
 }
@@ -157,13 +157,13 @@ func (runner *{{$model.Name}}QueryRunner) Count() (int, error) {
 	return runner.db.Query(runner.q).Count()
 }
 
-func (runner *{{$model.Name}}QueryRunner) All() ([]*{{.Name}}, error) {
-	items := []*{{.Name}}{}
+func (runner *{{$model.Name}}QueryRunner) All() ([]*{{.Name}}AppxModel, error) {
+	items := []*{{.Name}}AppxModel{}
 	return items, runner.db.Query(runner.q).Results(items)
 }
 
-func (runner *{{$model.Name}}QueryRunner) First() (*{{.Name}}, error) {
-	item := &{{.Name}}{}
+func (runner *{{$model.Name}}QueryRunner) First() (*{{.Name}}AppxModel, error) {
+	item := &{{.Name}}AppxModel{}
 	return item, runner.db.Query(runner.q.Limit(1)).Result(item)
 }
 
