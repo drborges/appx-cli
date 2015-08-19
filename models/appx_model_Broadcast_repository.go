@@ -58,7 +58,7 @@ func (repo *BroadcastAppxRepository) GetByURL(value string) (*BroadcastAppxModel
 
 
 
-func (repo *BroadcastAppxRepository) FindWhereLength(op string, value interface{}) *BroadcastQueryRunner {
+func (repo *BroadcastAppxRepository) FindWhereLength(op string, value int) *BroadcastQueryRunner {
 	q := datastore.NewQuery(new(Broadcast).KeySpec().Kind).Filter("Length" + op, value)
 	return &BroadcastQueryRunner{
 		db: repo.db,
@@ -66,7 +66,7 @@ func (repo *BroadcastAppxRepository) FindWhereLength(op string, value interface{
 	}
 }
 
-func (repo *BroadcastAppxRepository) FindWhereURL(op string, value interface{}) *BroadcastQueryRunner {
+func (repo *BroadcastAppxRepository) FindWhereURL(op string, value string) *BroadcastQueryRunner {
 	q := datastore.NewQuery(new(Broadcast).KeySpec().Kind).Filter("URL" + op, value)
 	return &BroadcastQueryRunner{
 		db: repo.db,
@@ -76,7 +76,7 @@ func (repo *BroadcastAppxRepository) FindWhereURL(op string, value interface{}) 
 
 
 
-func (repo *BroadcastAppxRepository) FindByLength(value interface{}) *BroadcastQueryRunner {
+func (repo *BroadcastAppxRepository) FindByLength(value int) *BroadcastQueryRunner {
 	q := datastore.NewQuery(new(Broadcast).KeySpec().Kind).Filter("Length=", value)
 	return &BroadcastQueryRunner{
 		db: repo.db,
@@ -84,7 +84,7 @@ func (repo *BroadcastAppxRepository) FindByLength(value interface{}) *BroadcastQ
 	}
 }
 
-func (repo *BroadcastAppxRepository) FindByURL(value interface{}) *BroadcastQueryRunner {
+func (repo *BroadcastAppxRepository) FindByURL(value string) *BroadcastQueryRunner {
 	q := datastore.NewQuery(new(Broadcast).KeySpec().Kind).Filter("URL=", value)
 	return &BroadcastQueryRunner{
 		db: repo.db,

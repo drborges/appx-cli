@@ -72,7 +72,7 @@ func (repo *AccountAppxRepository) GetByToken(value string) (*AccountAppxModel, 
 
 
 
-func (repo *AccountAppxRepository) FindWhereBroadcast(op string, value interface{}) *AccountQueryRunner {
+func (repo *AccountAppxRepository) FindWhereBroadcast(op string, value Broadcast) *AccountQueryRunner {
 	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Broadcast" + op, value)
 	return &AccountQueryRunner{
 		db: repo.db,
@@ -80,7 +80,7 @@ func (repo *AccountAppxRepository) FindWhereBroadcast(op string, value interface
 	}
 }
 
-func (repo *AccountAppxRepository) FindWhereEmail(op string, value interface{}) *AccountQueryRunner {
+func (repo *AccountAppxRepository) FindWhereEmail(op string, value string) *AccountQueryRunner {
 	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Email" + op, value)
 	return &AccountQueryRunner{
 		db: repo.db,
@@ -88,7 +88,7 @@ func (repo *AccountAppxRepository) FindWhereEmail(op string, value interface{}) 
 	}
 }
 
-func (repo *AccountAppxRepository) FindWhereName(op string, value interface{}) *AccountQueryRunner {
+func (repo *AccountAppxRepository) FindWhereName(op string, value string) *AccountQueryRunner {
 	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Name" + op, value)
 	return &AccountQueryRunner{
 		db: repo.db,
@@ -96,7 +96,7 @@ func (repo *AccountAppxRepository) FindWhereName(op string, value interface{}) *
 	}
 }
 
-func (repo *AccountAppxRepository) FindWhereToken(op string, value interface{}) *AccountQueryRunner {
+func (repo *AccountAppxRepository) FindWhereToken(op string, value string) *AccountQueryRunner {
 	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Token" + op, value)
 	return &AccountQueryRunner{
 		db: repo.db,
@@ -106,7 +106,7 @@ func (repo *AccountAppxRepository) FindWhereToken(op string, value interface{}) 
 
 
 
-func (repo *AccountAppxRepository) FindByBroadcast(value interface{}) *AccountQueryRunner {
+func (repo *AccountAppxRepository) FindByBroadcast(value Broadcast) *AccountQueryRunner {
 	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Broadcast=", value)
 	return &AccountQueryRunner{
 		db: repo.db,
@@ -114,7 +114,7 @@ func (repo *AccountAppxRepository) FindByBroadcast(value interface{}) *AccountQu
 	}
 }
 
-func (repo *AccountAppxRepository) FindByEmail(value interface{}) *AccountQueryRunner {
+func (repo *AccountAppxRepository) FindByEmail(value string) *AccountQueryRunner {
 	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Email=", value)
 	return &AccountQueryRunner{
 		db: repo.db,
@@ -122,7 +122,7 @@ func (repo *AccountAppxRepository) FindByEmail(value interface{}) *AccountQueryR
 	}
 }
 
-func (repo *AccountAppxRepository) FindByName(value interface{}) *AccountQueryRunner {
+func (repo *AccountAppxRepository) FindByName(value string) *AccountQueryRunner {
 	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Name=", value)
 	return &AccountQueryRunner{
 		db: repo.db,
@@ -130,7 +130,7 @@ func (repo *AccountAppxRepository) FindByName(value interface{}) *AccountQueryRu
 	}
 }
 
-func (repo *AccountAppxRepository) FindByToken(value interface{}) *AccountQueryRunner {
+func (repo *AccountAppxRepository) FindByToken(value string) *AccountQueryRunner {
 	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Token=", value)
 	return &AccountQueryRunner{
 		db: repo.db,

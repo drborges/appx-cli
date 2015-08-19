@@ -53,7 +53,7 @@ func (repo *{{$model.Name}}AppxRepository) GetBy{{ $field }}(value {{ $type }}) 
 {{end}}
 
 {{range $field, $type := .Fields}}
-func (repo *{{ $model.Name }}AppxRepository) FindWhere{{ $field }}(op string, value interface{}) *{{$model.Name}}QueryRunner {
+func (repo *{{ $model.Name }}AppxRepository) FindWhere{{ $field }}(op string, value {{ $type }}) *{{$model.Name}}QueryRunner {
 	q := datastore.NewQuery(new({{ $model.Name }}).KeySpec().Kind).Filter("{{ $field }}" + op, value)
 	return &{{$model.Name}}QueryRunner{
 		db: repo.db,
@@ -63,7 +63,7 @@ func (repo *{{ $model.Name }}AppxRepository) FindWhere{{ $field }}(op string, va
 {{end}}
 
 {{range $field, $type := .Fields}}
-func (repo *{{ $model.Name }}AppxRepository) FindBy{{ $field }}(value interface{}) *{{$model.Name}}QueryRunner {
+func (repo *{{ $model.Name }}AppxRepository) FindBy{{ $field }}(value {{ $type }}) *{{$model.Name}}QueryRunner {
 	q := datastore.NewQuery(new({{ $model.Name }}).KeySpec().Kind).Filter("{{ $field }}=", value)
 	return &{{$model.Name}}QueryRunner{
 		db: repo.db,
