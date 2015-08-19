@@ -159,7 +159,7 @@ func (runner *BroadcastQueryRunner) OrderByURLDesc() *BroadcastQueryRunner {
 
 
 func (runner *BroadcastQueryRunner) Stream() *rivers.Stage {
-	return runner.db.Query(runner.q).StreamOf(&Broadcast{})
+	return runner.db.Query(runner.q).StreamOf(Broadcast{})
 }
 
 func (runner *BroadcastQueryRunner) Count() (int, error) {

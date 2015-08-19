@@ -225,7 +225,7 @@ func (runner *AccountQueryRunner) OrderByTokenDesc() *AccountQueryRunner {
 
 
 func (runner *AccountQueryRunner) Stream() *rivers.Stage {
-	return runner.db.Query(runner.q).StreamOf(&Account{})
+	return runner.db.Query(runner.q).StreamOf(Account{})
 }
 
 func (runner *AccountQueryRunner) Count() (int, error) {

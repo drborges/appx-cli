@@ -128,7 +128,7 @@ func (runner *{{$model.Name}}QueryRunner) OrderBy{{ $field }}Desc() *{{$model.Na
 {{end}}
 
 func (runner *{{$model.Name}}QueryRunner) Stream() *rivers.Stage {
-	return runner.db.Query(runner.q).StreamOf(&{{.Name}}{})
+	return runner.db.Query(runner.q).StreamOf({{.Name}}{})
 }
 
 func (runner *{{$model.Name}}QueryRunner) Count() (int, error) {
