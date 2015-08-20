@@ -84,16 +84,6 @@ func (repo *{{ $model.Name }}AppxRepository) FindWhere{{ $field }}Contains(value
 {{ end }}
 {{end}}
 
-{{range $field, $type := .Fields}}
-func (repo *{{ $model.Name }}AppxRepository) FindBy{{ $field }}(value {{ $type }}) *{{$model.Name}}QueryRunner {
-	q := datastore.NewQuery(new({{ $model.Name }}).KeySpec().Kind).Filter("{{ $field }}=", value)
-	return &{{$model.Name}}QueryRunner{
-		db: repo.db,
-		q:  q,
-	}
-}
-{{end}}
-
 func (repo *{{.Name}}AppxRepository) FindWhere(filter string, value interface{}) *{{$model.Name}}QueryRunner {
 	q := datastore.NewQuery(new({{.Name}}).KeySpec().Kind).Filter(filter, value)
 	return &{{$model.Name}}QueryRunner{
@@ -109,6 +99,23 @@ func (repo *{{.Name}}AppxRepository) FindWhereAncestorIs(ancestor appx.Entity) *
 		q:  q,
 	}
 }
+
+func (repo *{{ .Name }}AppxRepository) FindBy(q *datastore.Query) *{{.Name}}QueryRunner {
+	return &{{ .Name }}QueryRunner{
+		db: repo.db,
+		q:  q,
+	}
+}
+
+{{range $field, $type := .Fields}}
+func (repo *{{ $model.Name }}AppxRepository) FindBy{{ $field }}(value {{ $type }}) *{{$model.Name}}QueryRunner {
+	q := datastore.NewQuery(new({{ $model.Name }}).KeySpec().Kind).Filter("{{ $field }}=", value)
+	return &{{$model.Name}}QueryRunner{
+		db: repo.db,
+		q:  q,
+	}
+}
+{{end}}
 
 type {{$model.Name}}QueryRunner struct {
 	db *appx.Datastore

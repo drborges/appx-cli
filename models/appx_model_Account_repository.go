@@ -123,6 +123,29 @@ func (repo *AccountAppxRepository) FindWhereTagsContains(value string) *AccountQ
 
 
 
+func (repo *AccountAppxRepository) FindWhere(filter string, value interface{}) *AccountQueryRunner {
+	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter(filter, value)
+	return &AccountQueryRunner{
+		db: repo.db,
+		q:  q,
+	}
+}
+
+func (repo *AccountAppxRepository) FindWhereAncestorIs(ancestor appx.Entity) *AccountQueryRunner {
+	q := datastore.NewQuery(new(Account).KeySpec().Kind).Ancestor(ancestor.Key())
+	return &AccountQueryRunner{
+		db: repo.db,
+		q:  q,
+	}
+}
+
+func (repo *AccountAppxRepository) FindBy(q *datastore.Query) *AccountQueryRunner {
+	return &AccountQueryRunner{
+		db: repo.db,
+		q:  q,
+	}
+}
+
 
 func (repo *AccountAppxRepository) FindByEmail(value string) *AccountQueryRunner {
 	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Email=", value)
@@ -156,22 +179,6 @@ func (repo *AccountAppxRepository) FindByToken(value string) *AccountQueryRunner
 	}
 }
 
-
-func (repo *AccountAppxRepository) FindWhere(filter string, value interface{}) *AccountQueryRunner {
-	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter(filter, value)
-	return &AccountQueryRunner{
-		db: repo.db,
-		q:  q,
-	}
-}
-
-func (repo *AccountAppxRepository) FindWhereAncestorIs(ancestor appx.Entity) *AccountQueryRunner {
-	q := datastore.NewQuery(new(Account).KeySpec().Kind).Ancestor(ancestor.Key())
-	return &AccountQueryRunner{
-		db: repo.db,
-		q:  q,
-	}
-}
 
 type AccountQueryRunner struct {
 	db *appx.Datastore

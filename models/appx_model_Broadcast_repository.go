@@ -81,6 +81,29 @@ func (repo *BroadcastAppxRepository) FindWhereURL(op string, value string) *Broa
 
 
 
+func (repo *BroadcastAppxRepository) FindWhere(filter string, value interface{}) *BroadcastQueryRunner {
+	q := datastore.NewQuery(new(Broadcast).KeySpec().Kind).Filter(filter, value)
+	return &BroadcastQueryRunner{
+		db: repo.db,
+		q:  q,
+	}
+}
+
+func (repo *BroadcastAppxRepository) FindWhereAncestorIs(ancestor appx.Entity) *BroadcastQueryRunner {
+	q := datastore.NewQuery(new(Broadcast).KeySpec().Kind).Ancestor(ancestor.Key())
+	return &BroadcastQueryRunner{
+		db: repo.db,
+		q:  q,
+	}
+}
+
+func (repo *BroadcastAppxRepository) FindBy(q *datastore.Query) *BroadcastQueryRunner {
+	return &BroadcastQueryRunner{
+		db: repo.db,
+		q:  q,
+	}
+}
+
 
 func (repo *BroadcastAppxRepository) FindByLength(value int) *BroadcastQueryRunner {
 	q := datastore.NewQuery(new(Broadcast).KeySpec().Kind).Filter("Length=", value)
@@ -98,22 +121,6 @@ func (repo *BroadcastAppxRepository) FindByURL(value string) *BroadcastQueryRunn
 	}
 }
 
-
-func (repo *BroadcastAppxRepository) FindWhere(filter string, value interface{}) *BroadcastQueryRunner {
-	q := datastore.NewQuery(new(Broadcast).KeySpec().Kind).Filter(filter, value)
-	return &BroadcastQueryRunner{
-		db: repo.db,
-		q:  q,
-	}
-}
-
-func (repo *BroadcastAppxRepository) FindWhereAncestorIs(ancestor appx.Entity) *BroadcastQueryRunner {
-	q := datastore.NewQuery(new(Broadcast).KeySpec().Kind).Ancestor(ancestor.Key())
-	return &BroadcastQueryRunner{
-		db: repo.db,
-		q:  q,
-	}
-}
 
 type BroadcastQueryRunner struct {
 	db *appx.Datastore
