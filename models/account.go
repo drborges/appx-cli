@@ -5,11 +5,11 @@ import "github.com/drborges/appx"
 // A comment
 type Account struct {
 	appx.Model
-	Token string
-	Name  string
-	Email string
-	Tags  []string
-	Broadcast Broadcast
+	Token      string
+	Name       string
+	Email      string
+	Tags       []string
+	Broadcast  Broadcast
 	Broadcasts []*Broadcast
 }
 

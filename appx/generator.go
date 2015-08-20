@@ -1,10 +1,10 @@
 package appx
 
 import (
-	"log"
-	"text/template"
 	"github.com/drborges/go-ast/appx/templates"
+	"log"
 	"os"
+	"text/template"
 )
 
 func Generate(model *ModelDescriptor) error {
