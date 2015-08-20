@@ -5,19 +5,26 @@ import (
 	"sync"
 )
 
-func Process(pkg string) {
+func Process(path string) {
 	var wg sync.WaitGroup
-	for _, ast := range Parse(pkg) {
-		for model := range Traverse(pkg, ast) {
+	generated := false
+
+	for _, ast := range Parse(path) {
+		for model := range Traverse(path, ast) {
 			wg.Add(1)
 			go func(m *ModelDescriptor) {
 				if err := Generate(m); err != nil {
 					log.Fatal(err)
 				}
 				wg.Done()
+				generated = true
 			}(model)
 		}
 	}
 
 	wg.Wait()
+
+	if !generated {
+		log.Fatalln("No Appx model found at", path)
+	}
 }

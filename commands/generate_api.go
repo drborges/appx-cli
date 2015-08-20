@@ -4,18 +4,27 @@ import (
 	"github.com/codegangsta/cli"
 	"github.com/drborges/go-ast/appxcli"
 	"log"
+	"os"
 )
 
 func NewGenerateAPI(app *cli.App) cli.Command {
 	return cli.Command{
-		Name: "api",
-		Usage: "TODO for chain API",
+		Name:  "api",
+		Usage: "Generates Appx API for appx models detected in a given path",
+		Flags: []cli.Flag{cli.StringFlag{
+			Name:  "path, p",
+			Usage: "Use this flag to change the path where appx models will be searched for",
+		}},
 		Action: func(c *cli.Context) {
-			if pkg := c.Args().First(); pkg != "" {
-				appxcli.Process(pkg)
-			} else {
-				log.Fatal("Expected a package path to look for appx model definitions.")
+			path := c.String("path")
+			if path == "" {
+				dir, err := os.Getwd()
+				if err != nil {
+					log.Fatal(err)
+				}
+				path = dir
 			}
+			appxcli.Process(path)
 		},
 	}
 }

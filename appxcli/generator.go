@@ -8,8 +8,6 @@ import (
 )
 
 func Generate(model *ModelDescriptor) error {
-	log.Println("Generating:", model.Name)
-
 	t := template.Must(template.New("model").Parse(templates.AppxModel))
 	output := model.Pkg + "/appx_model_" + model.Name + ".go"
 	f, err := os.Create(output)
@@ -34,5 +32,6 @@ func Generate(model *ModelDescriptor) error {
 		log.Fatal(err)
 	}
 
+	log.Println("[API] generated for model", model.Name)
 	return nil
 }
