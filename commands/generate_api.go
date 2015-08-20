@@ -24,7 +24,7 @@ func NewGenerateAPI(app *cli.App) cli.Command {
 				}
 				path = dir
 			}
-			appxcli.Process(path)
+			appxcli.Process(path) // TODO Implement filter to genereate api code for a given model definition only
 		},
 	}
 }

@@ -13,7 +13,7 @@ func Process(path string) {
 		for model := range Traverse(path, ast) {
 			wg.Add(1)
 			go func(m *ModelDescriptor) {
-				if err := Generate(m); err != nil {
+				if err := GenerateApi(m); err != nil {
 					log.Fatal(err)
 				}
 				wg.Done()
