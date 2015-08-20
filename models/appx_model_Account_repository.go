@@ -39,6 +39,9 @@ func (repo *AccountAppxRepository) GetByEncodedKey(key string) (*AccountAppxMode
 	return item, repo.db.Load(item)
 }
 
+
+
+
 func (repo *AccountAppxRepository) GetByEmail(value string) (*AccountAppxModel, error) {
 	item := &Account{
 		Email: value,
@@ -67,8 +70,10 @@ func (repo *AccountAppxRepository) GetByToken(value string) (*AccountAppxModel, 
 	return item, repo.db.Load(item)
 }
 
+
+
 func (repo *AccountAppxRepository) FindWhereEmail(op string, value string) *AccountQueryRunner {
-	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Email"+op, value)
+	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Email" + op, value)
 	return &AccountQueryRunner{
 		db: repo.db,
 		q:  q,
@@ -76,7 +81,7 @@ func (repo *AccountAppxRepository) FindWhereEmail(op string, value string) *Acco
 }
 
 func (repo *AccountAppxRepository) FindWhereName(op string, value string) *AccountQueryRunner {
-	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Name"+op, value)
+	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Name" + op, value)
 	return &AccountQueryRunner{
 		db: repo.db,
 		q:  q,
@@ -84,7 +89,7 @@ func (repo *AccountAppxRepository) FindWhereName(op string, value string) *Accou
 }
 
 func (repo *AccountAppxRepository) FindWhereTags(op string, value []string) *AccountQueryRunner {
-	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Tags"+op, value)
+	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Tags" + op, value)
 	return &AccountQueryRunner{
 		db: repo.db,
 		q:  q,
@@ -92,12 +97,19 @@ func (repo *AccountAppxRepository) FindWhereTags(op string, value []string) *Acc
 }
 
 func (repo *AccountAppxRepository) FindWhereToken(op string, value string) *AccountQueryRunner {
-	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Token"+op, value)
+	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Token" + op, value)
 	return &AccountQueryRunner{
 		db: repo.db,
 		q:  q,
 	}
 }
+
+
+
+
+
+
+
 
 func (repo *AccountAppxRepository) FindWhereTagsContains(value string) *AccountQueryRunner {
 	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Tags=", value)
@@ -106,6 +118,10 @@ func (repo *AccountAppxRepository) FindWhereTagsContains(value string) *AccountQ
 		q:  q,
 	}
 }
+
+
+
+
 
 func (repo *AccountAppxRepository) FindWhere(filter string, value interface{}) *AccountQueryRunner {
 	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter(filter, value)
@@ -129,6 +145,7 @@ func (repo *AccountAppxRepository) FindBy(q *datastore.Query) *AccountQueryRunne
 		q:  q,
 	}
 }
+
 
 func (repo *AccountAppxRepository) FindByEmail(value string) *AccountQueryRunner {
 	q := datastore.NewQuery(new(Account).KeySpec().Kind).Filter("Email=", value)
@@ -162,6 +179,7 @@ func (repo *AccountAppxRepository) FindByToken(value string) *AccountQueryRunner
 	}
 }
 
+
 type AccountQueryRunner struct {
 	db *appx.Datastore
 	q  *datastore.Query
@@ -187,6 +205,7 @@ func (runner *AccountQueryRunner) KeysOnly() *AccountQueryRunner {
 	return runner
 }
 
+
 func (runner *AccountQueryRunner) OrderByEmailAsc() *AccountQueryRunner {
 	runner.q = runner.q.Order("Email")
 	return runner
@@ -207,6 +226,8 @@ func (runner *AccountQueryRunner) OrderByTokenAsc() *AccountQueryRunner {
 	return runner
 }
 
+
+
 func (runner *AccountQueryRunner) OrderByEmailDesc() *AccountQueryRunner {
 	runner.q = runner.q.Order("-Email")
 	return runner
@@ -226,6 +247,7 @@ func (runner *AccountQueryRunner) OrderByTokenDesc() *AccountQueryRunner {
 	runner.q = runner.q.Order("-Token")
 	return runner
 }
+
 
 func (runner *AccountQueryRunner) Stream() *rivers.Stage {
 	return runner.db.Query(runner.q).StreamOf(Account{})

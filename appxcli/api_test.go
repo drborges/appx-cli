@@ -1,4 +1,4 @@
-package appx_test
+package appxcli_test
 
 import (
 	"github.com/drborges/go-ast/models"

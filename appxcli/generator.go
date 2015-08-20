@@ -1,7 +1,7 @@
-package appx
+package appxcli
 
 import (
-	"github.com/drborges/go-ast/appx/templates"
+	"github.com/drborges/go-ast/appxcli/templates"
 	"log"
 	"os"
 	"text/template"

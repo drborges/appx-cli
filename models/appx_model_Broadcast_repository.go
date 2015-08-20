@@ -39,6 +39,9 @@ func (repo *BroadcastAppxRepository) GetByEncodedKey(key string) (*BroadcastAppx
 	return item, repo.db.Load(item)
 }
 
+
+
+
 func (repo *BroadcastAppxRepository) GetByLength(value int) (*BroadcastAppxModel, error) {
 	item := &Broadcast{
 		Length: value,
@@ -53,8 +56,10 @@ func (repo *BroadcastAppxRepository) GetByURL(value string) (*BroadcastAppxModel
 	return item, repo.db.Load(item)
 }
 
+
+
 func (repo *BroadcastAppxRepository) FindWhereLength(op string, value int) *BroadcastQueryRunner {
-	q := datastore.NewQuery(new(Broadcast).KeySpec().Kind).Filter("Length"+op, value)
+	q := datastore.NewQuery(new(Broadcast).KeySpec().Kind).Filter("Length" + op, value)
 	return &BroadcastQueryRunner{
 		db: repo.db,
 		q:  q,
@@ -62,12 +67,19 @@ func (repo *BroadcastAppxRepository) FindWhereLength(op string, value int) *Broa
 }
 
 func (repo *BroadcastAppxRepository) FindWhereURL(op string, value string) *BroadcastQueryRunner {
-	q := datastore.NewQuery(new(Broadcast).KeySpec().Kind).Filter("URL"+op, value)
+	q := datastore.NewQuery(new(Broadcast).KeySpec().Kind).Filter("URL" + op, value)
 	return &BroadcastQueryRunner{
 		db: repo.db,
 		q:  q,
 	}
 }
+
+
+
+
+
+
+
 
 func (repo *BroadcastAppxRepository) FindWhere(filter string, value interface{}) *BroadcastQueryRunner {
 	q := datastore.NewQuery(new(Broadcast).KeySpec().Kind).Filter(filter, value)
@@ -92,6 +104,7 @@ func (repo *BroadcastAppxRepository) FindBy(q *datastore.Query) *BroadcastQueryR
 	}
 }
 
+
 func (repo *BroadcastAppxRepository) FindByLength(value int) *BroadcastQueryRunner {
 	q := datastore.NewQuery(new(Broadcast).KeySpec().Kind).Filter("Length=", value)
 	return &BroadcastQueryRunner{
@@ -107,6 +120,7 @@ func (repo *BroadcastAppxRepository) FindByURL(value string) *BroadcastQueryRunn
 		q:  q,
 	}
 }
+
 
 type BroadcastQueryRunner struct {
 	db *appx.Datastore
@@ -133,6 +147,7 @@ func (runner *BroadcastQueryRunner) KeysOnly() *BroadcastQueryRunner {
 	return runner
 }
 
+
 func (runner *BroadcastQueryRunner) OrderByLengthAsc() *BroadcastQueryRunner {
 	runner.q = runner.q.Order("Length")
 	return runner
@@ -143,6 +158,8 @@ func (runner *BroadcastQueryRunner) OrderByURLAsc() *BroadcastQueryRunner {
 	return runner
 }
 
+
+
 func (runner *BroadcastQueryRunner) OrderByLengthDesc() *BroadcastQueryRunner {
 	runner.q = runner.q.Order("-Length")
 	return runner
@@ -152,6 +169,7 @@ func (runner *BroadcastQueryRunner) OrderByURLDesc() *BroadcastQueryRunner {
 	runner.q = runner.q.Order("-URL")
 	return runner
 }
+
 
 func (runner *BroadcastQueryRunner) Stream() *rivers.Stage {
 	return runner.db.Query(runner.q).StreamOf(Broadcast{})

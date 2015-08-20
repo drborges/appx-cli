@@ -1,4 +1,4 @@
-package appx
+package appxcli
 
 import (
 	"go/ast"

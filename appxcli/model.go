@@ -1,4 +1,4 @@
-package appx
+package appxcli
 
 type ModelDescriptor struct {
 	Pkg    string
